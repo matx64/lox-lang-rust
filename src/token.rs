@@ -1,9 +1,16 @@
 pub struct Token {
-    pub token_kind: TokenKind,
-    pub lexeme: &'static str,
+    pub kind: TokenKind,
+    pub lex: Option<String>,
+    pub line: i64,
 }
 
-enum TokenKind {
+impl Token {
+    pub fn new(kind: TokenKind, lex: Option<String>, line: i64) -> Self {
+        Token { kind, lex, line }
+    }
+}
+
+pub enum TokenKind {
     // Single-character tokens.
     LEFT_PAREN,
     RIGHT_PAREN,
