@@ -30,7 +30,7 @@ impl Scanner {
         }
 
         self.tokens
-            .push(Token::new(TokenKind::Eof, None, self.line));
+            .push(Token::new(TokenKind::Eof, "".to_string(), self.line));
 
         &self.tokens
     }
@@ -94,6 +94,8 @@ impl Scanner {
                     self.number();
                 } else if self.is_alpha(c) {
                     self.identifier();
+                } else {
+                    self.error("Unexpected character")
                 }
             }
         }
@@ -151,11 +153,11 @@ impl Scanner {
     fn add_token(&mut self, kind: TokenKind) {
         let lexeme: String = String::from_iter(&self.source[self.start..self.current]);
 
-        self.tokens.push(Token::new(kind, Some(lexeme), self.line));
+        self.tokens.push(Token::new(kind, lexeme, self.line));
     }
 
     fn add_token_with_lex(&mut self, kind: TokenKind, lexeme: String) {
-        self.tokens.push(Token::new(kind, Some(lexeme), self.line));
+        self.tokens.push(Token::new(kind, lexeme, self.line));
     }
 
     fn advance(&mut self) -> char {
@@ -227,6 +229,6 @@ impl Scanner {
     }
 
     fn error(&self, msg: &'static str) {
-        panic!("{}", format!("Line: {}: {}", self.line, msg));
+        panic!("{}", format!("Error in Line {}: {}", self.line, msg));
     }
 }

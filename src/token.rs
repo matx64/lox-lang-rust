@@ -1,17 +1,17 @@
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub struct Token {
     pub kind: TokenKind,
-    pub lexeme: Option<String>,
+    pub lexeme: String,
     pub line: i64,
 }
 
 impl Token {
-    pub fn new(kind: TokenKind, lexeme: Option<String>, line: i64) -> Self {
+    pub fn new(kind: TokenKind, lexeme: String, line: i64) -> Self {
         Token { kind, lexeme, line }
     }
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TokenKind {
     // Single-character tokens.
     LeftParen,
